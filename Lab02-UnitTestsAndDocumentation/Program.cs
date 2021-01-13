@@ -15,7 +15,8 @@ namespace Lab02
             // I declared these to use for the while loop so the application keeps running until the user wants to exit
             string userChoice = "";
             string userYorN = "";
-
+            string moreTransactions = "Would you like another transaction (y/n)?";
+            string ensureValidType = "Sorry, please enter a positive and valid decimal number";
             while (userChoice != "4" && userYorN != "n") 
             {
                 Console.WriteLine("Please Select A Transaction...");
@@ -34,15 +35,15 @@ namespace Lab02
                     //Makes sure the input is a positive number
                     if (amount > 0)
                      {
-                        Deposit(Balance, amount);
+                        Deposit(amount);
                         Console.WriteLine($"Thank you! Depositting... ${amount}");
-                        Console.WriteLine("Would you like another transaction (y/n)?");
+                        Console.WriteLine(moreTransactions);
                         //used .toLower to weed out some user error
                         userYorN = Console.ReadLine().ToLower();
                     }
                     else
                     {
-                        Console.WriteLine("Sorry, please enter a positive and valid decimal number");
+                        Console.WriteLine(ensureValidType);
                     }
                 }
                 if (userChoice == "2")
@@ -50,23 +51,29 @@ namespace Lab02
                     Console.WriteLine("How much would you like to withdraw today?");
                     string amountInput = Console.ReadLine();
                     decimal amount = Convert.ToDecimal(amountInput);
-                    //Makes sure the input is a positive number
-                    if (amount > 0)
+                    //Makes sure balance cannot go below 0
+                    if (Balance - amount < 0)
                     {
-                        //Withdraw(Balance, amount)
+                        Console.WriteLine($"Sorry, you do not have enough funds in this account, your balance is currently: ${Balance}");
+                    }
+                    //Makes sure the input is a positive number
+                    else if (amount > 0 && Balance - amount > 0)
+                    {
+                        Withdraw(amount);
                         Console.WriteLine($"Thank you! Withdrawing... ${amount}");
-                        Console.WriteLine("Would you like another transaction?");
+                        Console.WriteLine(moreTransactions);
                         userYorN = Console.ReadLine().ToLower();
                     }
+                    //Makes sure they enter a positive decimal
                     else
                     {
-                        Console.WriteLine("Sorry, please enter a positive and valid decimal number");
+                        Console.WriteLine(ensureValidType);
                     }
                 }
                 if (userChoice == "3")
                 {
                     Console.WriteLine($"Here is your balance: ${Balance}");
-                    Console.WriteLine("Would you like another transaction?");
+                    Console.WriteLine(moreTransactions);
                     userYorN = Console.ReadLine().ToLower();
                 }
 
@@ -75,14 +82,25 @@ namespace Lab02
 
        public static decimal ViewBalance(decimal currentBallance)
        {
-           return Balance;
+            decimal balance = Balance;
+           return balance;
        }
         public static decimal Deposit(decimal amount)
         {
            decimal newBalance = Balance + amount;
-            Balance += newBalance;
+            Balance = newBalance;
             return newBalance;
 
+        }
+
+        public static decimal Withdraw (decimal amount)
+        {
+      
+                decimal newBalance = Balance - amount;
+                Balance = newBalance;
+                return newBalance;
+            
+          
         }
     }
 }
