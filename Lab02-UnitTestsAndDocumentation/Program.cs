@@ -34,7 +34,7 @@ namespace Lab02
                     //Makes sure the input is a positive number
                     if (amount > 0)
                      {
-                        // Deposit(Balance, amount);
+                        Deposit(Balance, amount);
                         Console.WriteLine($"Thank you! Depositting... ${amount}");
                         Console.WriteLine("Would you like another transaction (y/n)?");
                         //used .toLower to weed out some user error
@@ -73,10 +73,16 @@ namespace Lab02
             }
         }
 
-            public static decimal ViewBalance(decimal currentBallance)
-            {
-                return Balance;
-            }
+       public static decimal ViewBalance(decimal currentBallance)
+       {
+           return Balance;
+       }
+        public static decimal Deposit(decimal amount)
+        {
+           decimal newBalance = Balance + amount;
+            Balance += newBalance;
+            return newBalance;
 
+        }
     }
 }
