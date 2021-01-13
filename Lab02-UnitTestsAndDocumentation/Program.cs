@@ -4,7 +4,7 @@ namespace Lab02
 {
     public class Program
     {
-        public static decimal Balance = 5000;
+        public static decimal Balance = 0;
         public static void Main(string[] args)
         {
             UserInterface();
