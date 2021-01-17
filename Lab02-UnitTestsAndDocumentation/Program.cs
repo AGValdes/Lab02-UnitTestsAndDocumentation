@@ -18,7 +18,7 @@ namespace Lab02
             string userYorN = "";
             string moreTransactions = "Would you like another transaction (y/n)?";
             string ensureValidType = "Sorry, please enter a positive and valid decimal number";
-            while (userChoice != "4" && userYorN != "n") 
+            while (userChoice != "4" && userYorN != "n")
             {
                 Console.WriteLine("Please Select A Transaction...");
                 Console.WriteLine("1. Deposit");
@@ -35,7 +35,7 @@ namespace Lab02
                     decimal amount = Convert.ToDecimal(amountInput);
                     //Makes sure the input is a positive number
                     if (amount > 0)
-                     {
+                    {
                         Deposit(amount);
                         Console.WriteLine($"Thank you! Depositting... ${amount}");
                         Console.WriteLine(moreTransactions);
@@ -81,27 +81,62 @@ namespace Lab02
             }
         }
 
-       public static decimal ViewBalance(decimal currentBallance)
-       {
+        public static decimal ViewBalance(decimal currentBallance)
+        {
             decimal balance = Balance;
-           return balance;
-       }
+            return balance;
+        }
         public static decimal Deposit(decimal amount)
         {
-           decimal newBalance = Balance + amount;
-            Balance = newBalance;
-            return newBalance;
+            try
+            {
+                if (amount > 0)
+                {
+                decimal newBalance = Balance + amount;
+                Balance = newBalance;
+                return newBalance;
 
-        }
+                }
+                else
+                {
+                    Console.WriteLine("You cannot deposit a negative amount");
+                    return 0;
+                }
 
-        public static decimal Withdraw (decimal amount)
-        {
-      
+            }
+            catch (ArgumentException ae) {
+                Console.WriteLine("Sorry that input wasn't valid" + ae.Message);
+                return 0;
+            }
+
+            }
+
+            public static decimal Withdraw(decimal amount)
+            {
+            try
+            {
+                if (Balance - amount > 0)
+                {
                 decimal newBalance = Balance - amount;
                 Balance = newBalance;
                 return newBalance;
-            
-          
+
+                }
+                else
+                {
+                    return 0;
+                }
+               
+
+            }
+            catch (ArgumentException ae)
+            {
+                Console.WriteLine("Sorry that input wasn't valid" + ae.Message);
+                return 0;
+            }
+
+
+            }
         }
-    }
-}
+    } 
+

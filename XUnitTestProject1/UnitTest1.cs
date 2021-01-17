@@ -15,14 +15,6 @@ namespace Lab02Tests
 
         }
 
-        [Fact]
-        public void ViewBalanceTestNotWorking()
-        {
-            decimal balance = 5000;
-            decimal result = Program.ViewBalance(balance);
-            Assert.NotEqual(42, result);
-
-        }
 
         [Fact]
         public void DepositTestWorking()
@@ -34,28 +26,29 @@ namespace Lab02Tests
 
 
         [Fact]
-        public void DepositTestNotWorking()
+        public void Cant_Deposit_Negative()
         {
-            decimal balance = 1500;
-            decimal result = Program.Deposit(balance);
-            Assert.NotEqual(96, result);
+            Program.Balance = 1000;
+            decimal result = Program.Deposit(-500);
+            Assert.NotEqual(500, result);
         }
+
+        [Fact]
+        public void Cannot_Over_Withdraw()
+        {
+            Program.Balance = 400;
+            decimal result = Program.Withdraw(700);
+            Assert.Equal(0, result);
+        }
+
 
         [Fact]
         public void WithdrawTestWorking()
         {
-            decimal balance = Program.Balance;
-            decimal result = Program.Withdraw(balance);
-            Assert.Equal(Program.Balance, result);
-        }
-
-
-        [Fact]
-        public void WithdrawTestNotWorking()
-        {
-            decimal balance = 300;
-            decimal result = Program.Withdraw(balance);
-            Assert.NotEqual(400, result);
+            Program.Balance = 500;
+            decimal amount = 300;
+            decimal result = Program.Withdraw(amount);
+            Assert.Equal(200, result);
         }
     }
 }
